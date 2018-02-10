@@ -1,0 +1,106 @@
+#compdef glitch
+
+autoload -U is-at-least
+
+_glitch() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+":: :_glitch_commands" \
+"*::: :->Glitch" \
+&& ret=0
+    case $state in
+    (Glitch)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:glitch-command-$line[1]:"
+        case $line[1] in
+            (render)
+_arguments "${_arguments_options[@]}" \
+'-n+[Number of images to generate. If generating multiple images, they will form a continuous animation]' \
+'--number=[Number of images to generate. If generating multiple images, they will form a continuous animation]' \
+'--color-shift=[Amount of offset from original position of each color channel]' \
+'--scan-height=[Height of each scanline]' \
+'--scan-gap=[Height of the gap between scanlines]' \
+'--desync-amp=[Amplitude for the desync effect]' \
+'--desync-freq=[Frequency for the desync effect]' \
+'--wind-onset=[Onset chance for wind effect]' \
+'--wind-continue=[Continue chance for wind effect]' \
+'--blocks=[Number of blocks to shift]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+':file -- Input image:_files' \
+&& ret=0
+;;
+(completion)
+_arguments "${_arguments_options[@]}" \
+'--zsh[Generate zsh completion]' \
+'--bash[Generate bash completion]' \
+'--fish[Generate fish completion]' \
+'--psh[Generate powershell completion]' \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'-h[Prints help information]' \
+'--help[Prints help information]' \
+'-V[Prints version information]' \
+'--version[Prints version information]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_glitch_commands] )) ||
+_glitch_commands() {
+    local commands; commands=(
+        "render:Apply a glitch effect to images" \
+"completion:Generate completion scripts" \
+"help:Prints this message or the help of the given subcommand(s)" \
+    )
+    _describe -t commands 'glitch commands' commands "$@"
+}
+(( $+functions[_glitch__completion_commands] )) ||
+_glitch__completion_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'glitch completion commands' commands "$@"
+}
+(( $+functions[_glitch__help_commands] )) ||
+_glitch__help_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'glitch help commands' commands "$@"
+}
+(( $+functions[_glitch__render_commands] )) ||
+_glitch__render_commands() {
+    local commands; commands=(
+        
+    )
+    _describe -t commands 'glitch render commands' commands "$@"
+}
+
+_glitch "$@"
