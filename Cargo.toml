@@ -1,0 +1,10 @@
+[package]
+name = "glitch"
+version = "0.1.0"
+authors = ["Malte Schütze <malte.schuetze@fgms.de>"]
+
+[dependencies]
+image = '*'
+rand = '*'
+noise = '*'
+clap = '*'
