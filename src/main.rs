@@ -3,7 +3,7 @@ extern crate rand;
 extern crate noise;
 extern crate clap;
 
-use image::{GenericImage, ImageBuffer, Rgba, Pixel};
+use image::{GenericImage, DynamicImage, GenericImageView, ImageBuffer, Rgba, Pixel};
 use rand::distributions::{Normal, Range, IndependentSample};
 use rand::Rng;
 use std::borrow::Borrow;
